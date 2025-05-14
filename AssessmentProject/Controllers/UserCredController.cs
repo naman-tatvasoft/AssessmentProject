@@ -36,7 +36,6 @@ public class UserCredController : Controller
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public IActionResult VerifyUser(UserCredViewModel userCred)
     {
         var verification = _usercredService.VerifyUser(userCred);

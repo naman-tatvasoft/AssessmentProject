@@ -14,14 +14,28 @@ public class UserCredRepository : IUserCredRepository
 
     public string GetRoleName(UserCred userCred)
     {
-        var userObj = _context.Users.FirstOrDefault(e => e.Id == userCred.Id);
-        var roleObj = _context.Roles.FirstOrDefault(e => e.Id == userObj.RoleId);
-        return roleObj.Name;
+        try
+        {
+            var userObj = _context.Users.FirstOrDefault(e => e.Id == userCred.Id);
+            var roleObj = _context.Roles.FirstOrDefault(e => e.Id == userObj.RoleId);
+            return roleObj.Name;
+        }
+        catch
+        {
+            throw;
+        }
     }
     public UserCred GetUserData(string email)
     {
-        var data = _context.Users.FirstOrDefault(e => e.Email == email);
-        return data;
+        try
+        {
+            var data = _context.Users.FirstOrDefault(e => e.Email == email);
+            return data;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
 }
