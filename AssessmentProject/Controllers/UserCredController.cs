@@ -54,9 +54,11 @@ public class UserCredController : Controller
                 option.Expires = DateTime.Now.AddMinutes(_tokenDuration);
                 Response.Cookies.Append("AuthToken", verification, option);
             }
+            TempData["SuccessMessage"] = "Login Successfull";
             return RedirectToAction("Index", "Dashboard");
         }
-        return View("Index");
+        TempData["ErrorMessage"] = "Invalid Credentials";
+        return RedirectToAction("Index", "UserCred");
     }
 
     public IActionResult Logout()

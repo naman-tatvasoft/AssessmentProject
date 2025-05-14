@@ -18,14 +18,14 @@
                                     style="width: 90% !important;" id="email" placeholder="Email*" />
                                 <i class="bi bi-person-fill" style="margin: -25px;"></i>
                             </div>
-                            <div class="text-start pt-0 ps-5 pb-2"><span asp-validation-for="Email" class="text-danger " id="email-error-txt"></span></div>
+                            <div class="text-start pt-0 ps-4 pb-2"><span asp-validation-for="Email" class="text-danger " id="email-error-txt"></span></div>
 
                             <div class="login-pass-div mb-3 form-group">
                                 <input asp-for="Password" class="form-control input d-inline" type="password"
                                     id="password" style="width: 90% !important;" placeholder="Password*" />
                                 <i class="bi bi-eye-slash" id="togglePassword" style="margin: -25px;"></i>
                             </div>
-                            <div class="text-start pt-0 ps-5 pb-2"><span asp-validation-for="Password" class="text-danger" id="pass-error-txt"></span>
+                            <div class="text-start pt-0 ps-4 pb-2"><span asp-validation-for="Password" class="text-danger" id="pass-error-txt"></span></div>
 
                             <!-- Checkbox -->
                             <div class="login-forgot-div d-flex align-items-center justify-content-between form-group">
@@ -38,8 +38,8 @@
                                 </div>
                             </div>
 
-                            <div class="mt-3 form-group">   
-                                <input type="submit" class="login-btn btn btn-primary" onclick="" value="Login" />
+                            <div class="mt-3 form-group d-flex justify-content-end ">   
+                                <input type="submit" class="login-btn btn btn-primary me-2" onclick="" style="width:90% !important;" value="Login" />
                             </div>
                         </form>
                     </div>
