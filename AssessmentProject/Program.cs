@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BuisnessLogicLayer.Helper;
@@ -22,7 +23,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserCredRepository, UserCredRepository>();
 builder.Services.AddScoped<IUserCredService, UserCredService>();
-builder.Services.AddScoped<JWTService>();
+builder.Services.AddScoped<JWTHelper>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

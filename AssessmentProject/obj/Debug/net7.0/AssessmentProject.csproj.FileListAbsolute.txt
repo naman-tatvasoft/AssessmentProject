@@ -1,11 +1,3 @@
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.csproj.AssemblyReference.cache
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.AssemblyInfoInputs.cache
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.AssemblyInfo.cs
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.csproj.CoreCompileInputs.cache
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.RazorAssemblyInfo.cache
-C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.RazorAssemblyInfo.cs
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\appsettings.json
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\AssessmentProject.staticwebassets.runtime.json
@@ -35,6 +27,14 @@ C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\Bui
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\DataAccessLayer.dll
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\BuisnessLogicLayer.pdb
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\bin\Debug\net7.0\DataAccessLayer.pdb
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.csproj.AssemblyReference.cache
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.AssemblyInfoInputs.cache
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.AssemblyInfo.cs
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.csproj.CoreCompileInputs.cache
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.RazorAssemblyInfo.cache
+C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\AssessmentProject.RazorAssemblyInfo.cs
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\staticwebassets\msbuild.AssessmentProject.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\staticwebassets\msbuild.build.AssessmentProject.props
 C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.AssessmentProject.props

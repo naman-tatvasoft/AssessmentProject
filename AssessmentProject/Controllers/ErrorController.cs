@@ -7,7 +7,7 @@ namespace AssessmentProject.Controllers;
 public class ErrorController : Controller
 {
     [Route("Error/Unauthorized")]
-    public IActionResult Unauthorized()
+    public IActionResult UnAuthorized()
     {
         return View("Unauthorized");
     }

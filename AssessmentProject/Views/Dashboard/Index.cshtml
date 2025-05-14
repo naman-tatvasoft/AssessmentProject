@@ -3,9 +3,11 @@
     ViewData["Title"] = "Dashboard";
 }
 
-Dashboard
-<a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
-
-@* to check authorization  *@
-<a class="btn btn-info" asp-controller="Dashboard" asp-action="AdminAccess">admin</a>
-<a class="btn btn-info" asp-controller="Dashboard" asp-action="UserAccess">user</a>
+@* to check authorization *@
+<div class="d-flex justify-content-center gap-2">
+    <a class="btn btn-info" asp-controller="Dashboard" asp-action="AdminAccess">admin</a>
+    <a class="btn btn-info" asp-controller="Dashboard" asp-action="UserAccess">user</a>
+</div>
+<div class="d-flex justify-content-center pt-2">
+    <a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
+</div>

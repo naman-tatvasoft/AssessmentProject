@@ -6,14 +6,20 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BuisnessLogicLayer.Helper;
 
-public class JWTService 
+public class JWTHelper
 {
     private readonly string _secretKey;
     private readonly int _tokenDuration;
 
-    public JWTService(IConfiguration configuration)
+    public JWTHelper(IConfiguration configuration)
     {
-        _secretKey = configuration.GetValue<string>("JwtConfig:Key");
+        if (configuration == null)
+        {
+            throw new ArgumentNullException(nameof(configuration));
+        }
+        _secretKey = configuration.GetValue<string>("JwtConfig:Key") 
+                 ?? throw new InvalidOperationException("JwtConfig:Key is not configured.");
+    
         _tokenDuration = configuration.GetValue<int>("JwtConfig:Duration");
     }
 
@@ -54,14 +60,14 @@ public class JWTService
             issuer: "localhost",
             audience: "localhost",
             claims: claims,
-            expires: DateTime.Now.AddDays(_tokenDuration),
+            expires: DateTime.Now.AddHours(_tokenDuration),
             signingCredentials: credentials
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-     public ClaimsPrincipal? GetClaimsFromToken(string token)
+    public ClaimsPrincipal? GetClaimsFromToken(string token)
     {
         var handler = new JwtSecurityTokenHandler();
         var jwtToken = handler.ReadJwtToken(token);

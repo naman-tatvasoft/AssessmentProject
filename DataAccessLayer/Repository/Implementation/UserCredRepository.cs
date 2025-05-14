@@ -16,7 +16,6 @@ public class UserCredRepository : IUserCredRepository
     {
         var userObj = _context.Users.FirstOrDefault(e => e.Id == userCred.Id);
         var roleObj = _context.Roles.FirstOrDefault(e => e.Id == userObj.RoleId);
-    
         return roleObj.Name;
     }
     public UserCred GetUserData(string email)

@@ -11,12 +11,12 @@ public class UserCredController : Controller
 {
     private readonly IUserCredService _usercredService;
     private readonly int _tokenDuration;
-    private readonly JWTService _jwtService;
-    public UserCredController(IUserCredService usercredService, IConfiguration configuration, JWTService jwtService)
+    private readonly JWTHelper _jwtHelper;
+    public UserCredController(IUserCredService usercredService, IConfiguration configuration, JWTHelper jwtHelper)
     {
         this._usercredService = usercredService;
         this._tokenDuration = configuration.GetValue<int>("JwtConfig:Duration");
-        this._jwtService = jwtService;
+        this._jwtHelper = jwtHelper;
     }
 
     [AllowAnonymous]
@@ -25,13 +25,9 @@ public class UserCredController : Controller
         if (Request.Cookies.ContainsKey("AuthToken"))
         {
             string? token = Request.Cookies["AuthToken"];
-            var claims = _jwtService.GetClaimsFromToken(token);
+            var claims = _jwtHelper.GetClaimsFromToken(token);
             if (claims != null)
             {
-                string email = _jwtService.GetClaimValue(token, "email");
-                string role = _jwtService.GetClaimValue(token, "role");
-                ViewBag.Email = email;
-                ViewBag.Role = role;
                 return RedirectToAction("Index", "Dashboard");
             }
         }
