@@ -10,17 +10,14 @@ namespace AssessmentProject.Controllers;
 public class UserCredController : Controller
 {
     private readonly IUserCredService _usercredService;
-    private readonly string _secretKey;
     private readonly int _tokenDuration;
     private readonly JWTService _jwtService;
     public UserCredController(IUserCredService usercredService, IConfiguration configuration, JWTService jwtService)
     {
         this._usercredService = usercredService;
-        this._secretKey = configuration.GetValue<string>("JwtConfig:Key");
         this._tokenDuration = configuration.GetValue<int>("JwtConfig:Duration");
         this._jwtService = jwtService;
     }
-
 
     [AllowAnonymous]
     public IActionResult Index()
@@ -58,7 +55,7 @@ public class UserCredController : Controller
             }
             else
             {
-                option.Expires = DateTime.Now.AddMinutes(10);
+                option.Expires = DateTime.Now.AddMinutes(_tokenDuration);
                 Response.Cookies.Append("AuthToken", verification, option);
             }
             return RedirectToAction("Index", "Dashboard");

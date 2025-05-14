@@ -4,8 +4,7 @@ namespace DataAccessLayer.Repository.Interface;
 
 public interface IUserCredRepository
 {
-    public string JwtRoleName(UserCred userCred);
-
-    public UserCred VerifyUser(string email);
+    public string GetRoleName(UserCred userCred);
+    public UserCred GetUserData(string email);
 
 }

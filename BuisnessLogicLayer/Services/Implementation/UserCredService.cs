@@ -17,10 +17,10 @@ public class UserCredService : IUserCredService
 
     public string VerifyUser(UserCredViewModel userCred)
     {
-        var data = _userCredRepository.VerifyUser(userCred.Email);
+        var data = _userCredRepository.GetUserData(userCred.Email);
         if (data != null && data.Password == userCred.Password)
         {
-            var role_obj = _userCredRepository.JwtRoleName(data);
+            var role_obj = _userCredRepository.GetRoleName(data);
             var token = _jwtService.GenerateToken(userCred.Email, role_obj);
             return token;
         } 

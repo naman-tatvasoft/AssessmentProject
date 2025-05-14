@@ -12,14 +12,14 @@ public class UserCredRepository : IUserCredRepository
         _context = context;
     }
 
-    public string JwtRoleName(UserCred userCred)
+    public string GetRoleName(UserCred userCred)
     {
         var userObj = _context.Users.FirstOrDefault(e => e.Id == userCred.Id);
         var roleObj = _context.Roles.FirstOrDefault(e => e.Id == userObj.RoleId);
     
         return roleObj.Name;
     }
-    public UserCred VerifyUser(string email)
+    public UserCred GetUserData(string email)
     {
         var data = _context.Users.FirstOrDefault(e => e.Email == email);
         return data;

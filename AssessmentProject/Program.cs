@@ -67,7 +67,7 @@ builder.Services.AddAuthentication(x=>{
             },
             OnForbidden = context =>
             {
-                context.Response.Redirect("/Error/Forbidden");
+                context.Response.Redirect("/Error/Unauthorized");
                 return Task.CompletedTask;
             }
         };

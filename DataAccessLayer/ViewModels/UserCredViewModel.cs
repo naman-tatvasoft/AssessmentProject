@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace DataAccessLayer.ViewModels;
 
 public class UserCredViewModel
