@@ -16,8 +16,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Dashboard/AdminAccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEFkbWluQWNjZXNzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Dashboard/UserAccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFVzZXJBY2Nlc3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Error/Forbidden.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcRm9yYmlkZGVuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Error/Unauthorized.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcVW5hdXRob3JpemVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Home/Index.cshtml]

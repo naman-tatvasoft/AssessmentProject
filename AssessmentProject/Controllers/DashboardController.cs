@@ -9,4 +9,15 @@ public class DashboardController : Controller
     public IActionResult Index(){
         return View();
     }
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult AdminAccess(){
+        return View();
+    }
+
+    [Authorize(Roles = "User")]
+    
+    public IActionResult UserAccess(){
+        return View();
+    }
 }

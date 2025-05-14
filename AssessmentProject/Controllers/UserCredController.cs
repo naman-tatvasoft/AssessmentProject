@@ -61,10 +61,8 @@ public class UserCredController : Controller
                 option.Expires = DateTime.Now.AddMinutes(10);
                 Response.Cookies.Append("AuthToken", verification, option);
             }
-            TempData["SuccessMessage"] = "Login Successful";
             return RedirectToAction("Index", "Dashboard");
         }
-        TempData["ErrorMessage"] = "Please enter valid credentials";
         return View("Index");
     }
 
@@ -72,7 +70,6 @@ public class UserCredController : Controller
     {
         Response.Cookies.Delete("AuthToken");
         Response.Headers["Clear-Site-Data"] = "\"cache\", \"cookies\", \"storage\"";
-        TempData["SuccessMessage"] = "Logged Out Successfully";
         return RedirectToAction("Index", "UserCred");
     }
 

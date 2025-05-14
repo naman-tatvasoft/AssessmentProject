@@ -3,5 +3,9 @@
     ViewData["Title"] = "Dashboard";
 }
 
-hello
+Dashboard
 <a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
+
+@* to check authorization  *@
+<a class="btn btn-info" asp-controller="Dashboard" asp-action="AdminAccess">admin</a>
+<a class="btn btn-info" asp-controller="Dashboard" asp-action="UserAccess">user</a>
