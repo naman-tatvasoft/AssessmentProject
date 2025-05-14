@@ -1,0 +1,69 @@
+@model DataAccessLayer.ViewModels.UserCredViewModel;
+@{
+    Layout = "_LoginLayout";
+    ViewData["Title"] = "Login";
+}
+
+ <div class="main">
+        <div class="row d-flex login-container ">
+
+            <div class="content-div col-md-12 text-md-start extra-space min-vh-100 align-content-center justify-content-center">
+
+                <div class="logo-div d-flex align-items-center justify-content-center mb-4">
+                        <span class="logo-name">Login</span>
+                </div>
+
+                <div class="d-flex justify-content-center" style="width: 100% !important;">
+                    <form asp-action="VerifyUser" asp-controller="UserCred" class="cred-form">
+                        <div class="login-user-div mb-3 form-group" >
+                            <input  asp-for="Email"  type="email" class="input form-control d-inline" style="width: 90% !important;" id="email" placeholder="Email*"/>
+                            <i class="bi bi-person-fill" style="margin: -25px;"></i>                      
+                            <span asp-validation-for="Email" class="text-danger" id="email-error-txt"></span> 
+                        </div>
+                        
+                        <div class="login-pass-div mb-3 form-group">
+                            <input  asp-for="Password" class="form-control input d-inline" type="password"  id="password" style="width: 90% !important;" placeholder="Password*"/>
+                            <i class="bi bi-eye-slash" id="togglePassword"  style="margin: -25px;"></i>
+                            <span asp-validation-for="Password" class="text-danger" id="pass-error-txt"></span>
+                        </div>
+
+                        <div class="login-forgot-div d-flex align-items-center justify-content-between form-group">
+                            <div class="form-check-inline">
+                                <label asp-for="RememberMe" class="form-check-label">
+                                    <input asp-for="RememberMe" type="checkbox" class="form-check-input"/> Remember me
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 form-group">
+                            <input type="submit" class="login-btn btn btn-primary" onclick="" value="Login"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+@section Scripts {
+
+    <script>
+        function redirectToForgotPassword() {
+            var email = document.getElementById('email').value;
+            window.location.href = '/UserCred/ForgotPassword?email=' + encodeURIComponent(email);
+        }
+        
+        togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        if (togglePassword) {
+            togglePassword.addEventListener('click', () => {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                togglePassword.classList.toggle('bi-eye');
+            });
+        }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

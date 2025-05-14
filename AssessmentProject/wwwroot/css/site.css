@@ -17,6 +17,15 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+/* auth css */
+.logo-name{
+  color: #0084c3 !important;
+  font-weight: 600;
+  opacity: 1;
+  font-size: xx-large;
+}
+
+#password, #email, #confirm-password{
+  width: 100%;
+  padding: 8px;   
 }

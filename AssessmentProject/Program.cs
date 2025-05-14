@@ -1,8 +1,14 @@
 using System.Security.Claims;
 using System.Text;
+using BuisnessLogicLayer.Helper;
+using BuisnessLogicLayer.Services.Implementation;
+using BuisnessLogicLayer.Services.Interface;
 using DataAccessLayer.Models;
+using DataAccessLayer.Repository.Implementation;
+using DataAccessLayer.Repository.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +20,12 @@ builder.Services.AddDbContext<AssessmentProjectDbContext>(q => q.UseNpgsql(conn)
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// builder.Services.AddScoped<IUserCredRepository, UserCredRepository>();
-// builder.Services.AddScoped<IUserCredService, UserCredService>();
+builder.Services.AddScoped<IUserCredRepository, UserCredRepository>();
+builder.Services.AddScoped<IUserCredService, UserCredService>();
+builder.Services.AddScoped<JWTService>();
+
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 builder.Services.AddHttpContextAccessor();
 
 
@@ -86,6 +96,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=UserCred}/{action=Index}/{id?}");
 
 app.Run();
