@@ -35,4 +35,11 @@ public class StudentService : IStudentService
         return studentData;
     }
 
+    public List<CourseViewModel> GetMyCourses(int studentId)
+    {
+        var studentCourseData = _studentRepository.GetMyCourses(studentId);
+        return studentCourseData;
+    }
+    
+
 }

@@ -1,0 +1,52 @@
+@using DataAccessLayer.ViewModels
+@model List<CourseViewModel>
+
+<div class="table-responsive p-3">
+    <table class="table w-100">
+        <thead>
+            <tr class="border-bottom border-dark">
+                <th class="fw-bold text-start text-nowrap">
+                    <div class="d-flex">
+                        <span>#Course Id</span>
+                    </div>
+                </th>
+                <th class="fw-bold text-center">
+                    <div class="d-flex">
+                        <span>Course Name</span>
+                    </div>
+                </th>
+                <th class="fw-bold text-start">Content</th>
+                <th class="fw-bold text-start">Credits</th>
+                
+                <th class="fw-bold text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody id="myCourse-student">
+            @if (Model.Count == 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center text-danger fw-bold">No Data Found</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.Id</td>
+                        <td>@item.CourseName</td>
+                        <td>@item.Content</td>
+                        <td>@item.Credits</td>
+                        <td class="text-center">
+                            <a class="completeButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#completeCourse" data-id="@item.Id"
+                                onclick="completeIdFetch(@item.Id)">Complete</a>
+                            <a class="withdrawButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#withdrawCourse" data-id="@item.Id"
+                                onclick="withdrawIdFetch(@item.Id)">Withdraw</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

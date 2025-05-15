@@ -46,4 +46,11 @@ public class StudentController : Controller
     }
     
 
+    [HttpGet]
+    [Authorize(Roles ="User")]
+    public IActionResult MyCourse(){
+        var studentId = int.Parse(Request.Cookies["UserId"]);
+        List<CourseViewModel> list = _studentService.GetMyCourses(studentId);
+        return View(list);
+    }
 }

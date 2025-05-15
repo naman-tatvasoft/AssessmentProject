@@ -59,13 +59,29 @@ public class StudentRepository : IStudentRepository
         var studentData = _context.Enrollments
             .Include(en => en.Student)
             .ThenInclude(en => en.UserCred)
-            .Where(en => en.CourseId == courseId)
+            .Where(en => en.CourseId == courseId && !en.isWithdrawn)
             .Select(en => new StudentHistoryViewModel
             {
                 Id = en.StudentId,
                 Name = en.Student.Name,
                 Email = en.Student.UserCred.Email,
                 CreditEarned = en.Student.CreditsEarned
+            }).ToList();
+
+        return studentData;
+    }
+
+     public List<CourseViewModel> GetMyCourses(int studentId)
+    {
+
+        var studentData = _context.Enrollments
+            .Where(en => en.StudentId == studentId && !en.isWithdrawn)
+            .Select(en => new CourseViewModel
+            {
+                Id = en.CourseId,
+                CourseName = en.Course.Name,
+                Content = en.Course.Content,
+                Credits = en.Course.Credits
             }).ToList();
 
         return studentData;
