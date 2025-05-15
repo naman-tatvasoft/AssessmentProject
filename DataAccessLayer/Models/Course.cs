@@ -22,6 +22,8 @@ public class Course
     [ForeignKey("Department")]
     public int DepartmentId { get; set; }
 
+    public bool isDeleted {get; set;} = false;
+
     public virtual Department Department { get; set; } = null!;
 
     public virtual ICollection<Enrollment> Enrollment { get; set; } = new List<Enrollment>();

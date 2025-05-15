@@ -8,6 +8,6 @@ public interface ICourseRepository
     public Task<bool> AddCourse(CourseViewModel courseVM);
     public CourseViewModel SetUpdateModal(int id);
     public Task<bool> UpdateCourse(CourseViewModel courseVM);
-    // public Task<bool> DeleteCourse(int id);
+    public Task<bool> DeleteCourse(int id);
 
 }

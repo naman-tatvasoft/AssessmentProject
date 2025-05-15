@@ -17,6 +17,7 @@ public class CourseRepository : ICourseRepository
     public IQueryable<CourseViewModel> GetCourseList()
     {
         var query = _context.Courses
+        .Where(c => !c.isDeleted)
             .Select(x => new CourseViewModel
             {
                 Id = x.Id,
@@ -71,21 +72,21 @@ public class CourseRepository : ICourseRepository
             course.Content = courseVM.Content;
             course.Credits = courseVM.Credits;
             course.DepartmentId = courseVM.DepartmentId;
-           
+
             _context.Update(course);
         }
 
         return await _context.SaveChangesAsync() > 0;
     }
 
-    // public async Task<bool> DeleteCourse(int id)
-    // {
-    //     var course = _context.Courses.FirstOrDefault(pr => pr.Id == id);
-    //     if (course != null)
-    //     {
-    //         course.IsDeleted = true;
-    //         _context.Update(course);
-    //     }
-    //     return await _context.SaveChangesAsync() > 0;
-    // }
+    public async Task<bool> DeleteCourse(int id)
+    {
+        var course = _context.Courses.FirstOrDefault(pr => pr.Id == id);
+        if (course != null)
+        {
+            course.isDeleted = true;
+            _context.Update(course);
+        }
+        return await _context.SaveChangesAsync() > 0;
+    }
 }

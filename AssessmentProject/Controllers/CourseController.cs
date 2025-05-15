@@ -68,13 +68,13 @@ public class CourseController : Controller
         return Json(new { success = false, message = "Course Not Updated" });
     }
 
-    // [HttpPost]
-    // public async Task<IActionResult> DeleteCourse(int id){
-    //     var isDeleted = await _courseService.DeleteCourse(id);
-    //     if (isDeleted)
-    //     {
-    //         return Json(new { success = true, message = "Course Deleted successfully" });
-    //     }
-    //     return Json(new { success = false, message = "Course Not Deleted" });
-    // }
+    [HttpPost]
+    public async Task<IActionResult> DeleteCourse(int id){
+        var isDeleted = await _courseService.DeleteCourse(id);
+        if (isDeleted)
+        {
+            return Json(new { success = true, message = "Course Deleted successfully" });
+        }
+        return Json(new { success = false, message = "Course Not Deleted" });
+    }
 }

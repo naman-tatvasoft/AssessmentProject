@@ -65,9 +65,9 @@ public class CourseService : ICourseService
         return await _courseRepository.UpdateCourse(courseVM);
     }
 
-    // public async Task<bool> DeleteCourse(int id)
-    // {
-    //     return await _courseRepository.DeleteCourse(id);
-    // }
+    public async Task<bool> DeleteCourse(int id)
+    {
+        return await _courseRepository.DeleteCourse(id);
+    }
 
 }
