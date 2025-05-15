@@ -9,5 +9,8 @@ public interface ICourseRepository
     public CourseViewModel SetUpdateModal(int id);
     public Task<bool> UpdateCourse(CourseViewModel courseVM);
     public Task<bool> DeleteCourse(int id);
+    public IQueryable<CourseViewModel> GetCourseListStudent(int studentId);
+    public bool IsAlreadyEnrolled(int courseId, int studentId);
+    public Task<bool> EnrollCourse(int courseId, int studentId);
 
 }

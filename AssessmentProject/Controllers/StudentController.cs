@@ -1,5 +1,6 @@
 using BuisnessLogicLayer.Services.Interface;
 using DataAccessLayer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -37,6 +38,7 @@ public class StudentController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public IActionResult SetStudentModal(int courseId)
     {
         List<StudentHistoryViewModel> studentList = _studentService.GetStudentList(courseId);

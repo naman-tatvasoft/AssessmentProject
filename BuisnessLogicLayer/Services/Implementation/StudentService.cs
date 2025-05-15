@@ -34,4 +34,5 @@ public class StudentService : IStudentService
         var studentData = _studentRepository.GetStudentList(courseId);
         return studentData;
     }
+
 }

@@ -6,5 +6,6 @@ public interface IUserCredRepository
 {
     public string GetRoleName(UserCred userCred);
     public UserCred GetUserData(string email);
+    public int GetUserId(string email);
 
 }

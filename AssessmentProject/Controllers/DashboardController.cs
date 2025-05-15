@@ -41,9 +41,9 @@ public class DashboardController : Controller
     }
 
     [Authorize(Roles = "User")]
-
     public IActionResult StudentDashboard()
     {
+        string Email = Request.Cookies["Email"];
         return View();
     }
 }

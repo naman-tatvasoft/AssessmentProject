@@ -1,4 +1,5 @@
 @using DataAccessLayer.ViewModels
+@using Microsoft.AspNetCore.Authorization
 @model PaginationViewModel<CourseViewModel>
 
 @if (Model.Items.Count == 0)
@@ -18,8 +19,8 @@ else
             <td>@item.Content</td>
             <td>@item.Credits</td>
             <td>@item.Department</td>
-            <td>
-                 <div class="form-check form-switch">
+            <td >
+                <div class="form-check form-switch d-flex justify-content-center">
                     @if (item.isAvailable == true)
                     {
                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked disabled>
@@ -30,13 +31,24 @@ else
                     }
                 </div>
             </td>
-            <td>
-                <i class="fa-solid fa-pen w-25 updateButton" data-bs-toggle="modal" data-bs-target="#updateCourse" data-id="@item.Id"></i>
-                <i class="fa-solid fa-trash-can deleteButton" data-bs-toggle="modal"  data-bs-target="#deleteCourse" data-id="@item.Id"
-                onclick="deleteIdFetch(@item.Id)"></i>
-            </td>
 
+            @if ((User.IsInRole("Admin")))
+            {
+                <td class="text-center">
+                    <i class="fa-solid fa-pen w-25 updateButton" data-bs-toggle="modal" data-bs-target="#updateCourse"
+                        data-id="@item.Id"></i>
+                    <i class="fa-solid fa-trash-can deleteButton" data-bs-toggle="modal" data-bs-target="#deleteCourse"
+                        data-id="@item.Id" onclick="deleteIdFetch(@item.Id)"></i>
+                </td>
+            }
+            else
+            {
+                <td class="text-center">
+                    <a class="enrollButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#enrollCourse" data-id="@item.Id"
+                        onclick="enrollIdFetch(@item.Id)">Enroll</a>
+                </td>
+            }
         </tr>
     }
 }
-<input type="hidden" id="totalRecords_course" value="@Model.TotalCount"/>
+<input type="hidden" id="totalRecords_course" value="@Model.TotalCount" />

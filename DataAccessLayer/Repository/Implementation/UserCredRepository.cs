@@ -1,5 +1,6 @@
 using DataAccessLayer.Models;
 using DataAccessLayer.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repository.Implementation;
 
@@ -36,6 +37,11 @@ public class UserCredRepository : IUserCredRepository
         {
             throw;
         }
+    }
+
+    public int GetUserId(string email)
+    {
+        return _context.Students.Include(s => s.UserCred).FirstOrDefault(s => s.UserCred.Email == email).Id;
     }
 
 }

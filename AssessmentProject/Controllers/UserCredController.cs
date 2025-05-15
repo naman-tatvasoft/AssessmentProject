@@ -54,11 +54,31 @@ public class UserCredController : Controller
             {
                 option.Expires = DateTime.Now.AddDays(30);
                 Response.Cookies.Append("AuthToken", verification, option);
+
+                var claims = _jwtHelper.GetClaimsFromToken(verification);
+                if (claims != null)
+                {
+                    var role = _jwtHelper.GetClaimValue(verification, "role");
+                    if (role == "User")
+                    {
+                        Response.Cookies.Append("UserId", _usercredService.GetUserId(userCred.Email).ToString(), option);
+                    }
+                }
+
             }
             else
             {
                 option.Expires = DateTime.Now.AddMinutes(_tokenDuration);
                 Response.Cookies.Append("AuthToken", verification, option);
+                var claims = _jwtHelper.GetClaimsFromToken(verification);
+                if (claims != null)
+                {
+                    var role = _jwtHelper.GetClaimValue(verification, "role");
+                    if (role == "User")
+                    {
+                        Response.Cookies.Append("UserId", _usercredService.GetUserId(userCred.Email).ToString(), option);
+                    }
+                }
             }
             TempData["SuccessMessage"] = "Login Successfull";
 

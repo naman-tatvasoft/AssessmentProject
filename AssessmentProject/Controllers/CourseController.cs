@@ -24,6 +24,7 @@ public class CourseController : Controller
         PaginationViewModel<CourseViewModel> courseVM = _courseService.GetCourseList(search, sortColumn, sortDirection, pageNumber, pageSize);
         return PartialView("_CourseListPartial", courseVM);
     }
+    
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -76,5 +77,33 @@ public class CourseController : Controller
             return Json(new { success = true, message = "Course Deleted successfully" });
         }
         return Json(new { success = false, message = "Course Not Deleted" });
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "User")]
+    public IActionResult GetCourseListStudent(string search, string sortColumn, string sortDirection, int pageNumber, int pageSize)
+    {
+        var studentId = int.Parse(Request.Cookies["UserId"]);
+        PaginationViewModel<CourseViewModel> courseVM = _courseService.GetCourseListStudent(studentId,search, sortColumn, sortDirection, pageNumber, pageSize);
+        return PartialView("_CourseListPartial", courseVM);
+    }
+
+
+    
+    [HttpPost]
+    public async Task<IActionResult> EnrollCourse(int courseId){
+        var studentId = int.Parse(Request.Cookies["UserId"]);
+        var isAlreadyEnrolled = _courseService.IsAlreadyEnrolled(courseId, studentId);
+
+        if(isAlreadyEnrolled){
+            return Json(new { success = false, message = "Already Enrolled!!!" });
+        }
+
+        var isDeleted = await _courseService.EnrollCourse(courseId, studentId);
+        if (isDeleted)
+        {
+            return Json(new { success = true, message = "Course Enrolled successfully" });
+        }
+        return Json(new { success = false, message = "Course Not Enrolled" });
     }
 }

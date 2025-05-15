@@ -2,6 +2,7 @@ using BuisnessLogicLayer.Services.Interface;
 using BuisnessLogicLayer.Helper;
 using DataAccessLayer.ViewModels;
 using DataAccessLayer.Repository.Interface;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BuisnessLogicLayer.Services.Implementation;
 
@@ -27,5 +28,9 @@ public class UserCredService : IUserCredService
             return token;
         } 
         return null;
+    }
+    
+    public int GetUserId(string email){
+        return _userCredRepository.GetUserId(email);
     }
 }

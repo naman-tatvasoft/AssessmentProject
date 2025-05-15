@@ -1,6 +1,7 @@
 using DataAccessLayer.Models;
 using DataAccessLayer.Repository.Interface;
 using DataAccessLayer.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repository.Implementation;
 
@@ -90,6 +91,48 @@ public class CourseRepository : ICourseRepository
             course.isDeleted = true;
             _context.Update(course);
         }
+        return await _context.SaveChangesAsync() > 0;
+    }
+
+    public IQueryable<CourseViewModel> GetCourseListStudent(int studentId)
+    {
+        var query = _context
+        .Courses
+        .Include(c => c.Department)
+        .ThenInclude(c => c.Student)
+        .Where(c => !c.isDeleted && c.isAavailable && c.Department.Student.FirstOrDefault().Id == studentId)
+            .Select(x => new CourseViewModel
+            {
+                Id = x.Id,
+                CourseName = x.Name,
+                Content = x.Content,
+                Credits = x.Credits,
+                Department = _context.Departments.FirstOrDefault(c => c.Id == x.DepartmentId).Name,
+                isAvailable = x.isAavailable
+            }).OrderBy(u => u.CourseName).AsQueryable();
+        return query;
+    }
+    public bool IsAlreadyEnrolled(int courseId, int studentId)
+    {
+        var isEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId).Any();
+        if (isEnrolled)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    public async Task<bool> EnrollCourse(int courseId, int studentId)
+    {
+        var enroll = new Enrollment
+        {
+            CourseId = courseId,
+            StudentId = studentId,
+            isCompleted = false,
+            isWithdrawn = false
+        };
+        _context.Add(enroll);
         return await _context.SaveChangesAsync() > 0;
     }
 }
