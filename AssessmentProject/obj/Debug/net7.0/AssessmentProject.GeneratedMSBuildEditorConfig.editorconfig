@@ -9,11 +9,11 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AssessmentProject
 build_property.RootNamespace = AssessmentProject
-build_property.ProjectDir = c:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\
+build_property.ProjectDir = C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = c:\Users\pca106\Desktop\AssessmentProject\AssessmentProject
+build_property.MSBuildProjectDirectory = C:\Users\pca106\Desktop\AssessmentProject\AssessmentProject
 build_property._RazorSourceGeneratorDebug = 
 
 [C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Course/_addModalPartial.cshtml]
@@ -70,6 +70,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Student/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/Student/_StudentHistoryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxfU3R1ZGVudEhpc3RvcnlQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca106/Desktop/AssessmentProject/AssessmentProject/Views/UserCred/Index.cshtml]

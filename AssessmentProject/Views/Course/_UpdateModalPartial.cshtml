@@ -16,7 +16,8 @@
                 </div>
 
                 <div class="form-floating col-6 p-1">
-                    <input type="text" class="form-control" asp-for="@Model.Content" id="Content" placeholder="Content*">
+                    <input type="text" class="form-control" asp-for="@Model.Content" id="Content"
+                        placeholder="Content*">
                     <label for="Content" class="text-secondary">Content*</label>
                     <span asp-validation-for="@Model.Content" class="text-danger validate"></span>
                 </div>
@@ -32,18 +33,26 @@
                 </div>
 
                 <div class="form-floating col-6 p-1">
-                    <select class="form-select" asp-for="@Model.DepartmentId" id="selectDomainDropDown" asp-items="ViewBag.DepartmentFields">
+                    <select class="form-select" asp-for="@Model.DepartmentId" id="selectDomainDropDown"
+                        asp-items="ViewBag.DepartmentFields">
                     </select>
                     <label for="selectDepartmentDropDown">Department</label>
                 </div>
 
             </div>
 
+            <div class="row">
+                <div class="form-check form-switch d-flex justify-content-center align-items-center gap-2">
+                    <input class="form-check-input fs-3" type="checkbox" role="switch" asp-for="@Model.isAvailable" />
+                    <span>isAvailable</span>
+                </div>
+            </div>
+
         </div>
         <div class="modal-footer">
             <div class=" w-100 d-flex justify-content-between">
-                <button type="button" class="btn btn-white text-primary border border-primary" style="width:48%" data-bs-dismiss="modal"
-                    id="UpdateCourseCancell">Cancel</button>
+                <button type="button" class="btn btn-white text-primary border border-primary" style="width:48%"
+                    data-bs-dismiss="modal" id="UpdateCourseCancell">Cancel</button>
                 <button type="submit" class="btn btn-primary" style="width:48%">Save</button>
             </div>
         </div>
@@ -53,7 +62,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#UpdateCourseForm').on('submit', function(e){
+    $('#UpdateCourseForm').on('submit', function (e) {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({

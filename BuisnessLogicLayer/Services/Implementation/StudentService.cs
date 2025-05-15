@@ -17,7 +17,7 @@ public class StudentService : IStudentService
     }
 
 
-    
+
     public async Task<bool> RegisterStudent(RegisterViewModel registerData)
     {
         registerData.Password = _hashPassword.EncryptPassword(registerData.Password);
@@ -27,5 +27,11 @@ public class StudentService : IStudentService
             return true;
         }
         return false;
+    }
+
+    public List<StudentHistoryViewModel> GetStudentList(int courseId)
+    {
+        var studentData = _studentRepository.GetStudentList(courseId);
+        return studentData;
     }
 }

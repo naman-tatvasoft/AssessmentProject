@@ -1,0 +1,44 @@
+@using DataAccessLayer.ViewModels;
+@model List<StudentHistoryViewModel>
+
+<div class="modal-content rounded-3 shadow">
+    <div class="modal-header bg-light border-bottom">
+        <h5 class="modal-title fs-5 fw-semibold" id="customerHistoryModalLabel">Student History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="table-responsive customerHistoryTable bg-white">
+        <table class="table table-sm">
+            <thead>
+                <tr class="bg-light">
+                    <th class="text-muted fw-medium">Id</th>
+                    <th class="text-muted fw-medium">Name</th>
+                    <th class="text-muted fw-medium">Email</th>
+                    <th class="text-muted fw-medium">Credit Earned</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
+                {
+                    @foreach (var students in Model)
+                    {
+                        <tr>
+                            <td>@students.Id</td>
+                            <td>@students.Name</td>
+                            <td>@students.Email</td>
+                            <td>@students.CreditEarned</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-danger text-center">No Students Enrolled Yet</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

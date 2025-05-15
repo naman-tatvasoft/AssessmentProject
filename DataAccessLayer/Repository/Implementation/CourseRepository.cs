@@ -25,6 +25,7 @@ public class CourseRepository : ICourseRepository
                 Content = x.Content,
                 Credits = x.Credits,
                 Department = _context.Departments.FirstOrDefault(c => c.Id == x.DepartmentId).Name,
+                isAvailable = x.isAavailable
             }).OrderBy(u => u.CourseName).AsQueryable();
         return query;
     }
@@ -36,7 +37,8 @@ public class CourseRepository : ICourseRepository
             Name = courseVM.CourseName,
             Content = courseVM.Content,
             Credits = courseVM.Credits,
-            DepartmentId = courseVM.DepartmentId
+            DepartmentId = courseVM.DepartmentId,
+            isAavailable = courseVM.isAvailable
         };
         _context.Add(course);
 
@@ -54,7 +56,8 @@ public class CourseRepository : ICourseRepository
                 CourseName = course.Name,
                 Content = course.Content,
                 Credits = course.Credits,
-                DepartmentId = course.DepartmentId
+                DepartmentId = course.DepartmentId,
+                isAvailable = course.isAavailable
             };
             return courseVM;
         }
@@ -72,7 +75,7 @@ public class CourseRepository : ICourseRepository
             course.Content = courseVM.Content;
             course.Credits = courseVM.Credits;
             course.DepartmentId = courseVM.DepartmentId;
-
+            course.isAavailable = courseVM.isAvailable;
             _context.Update(course);
         }
 

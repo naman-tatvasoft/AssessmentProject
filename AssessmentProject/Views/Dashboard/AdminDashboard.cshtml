@@ -47,6 +47,7 @@
                                 <i class="bi bi-arrow-down sortable-desc" data-name="Department"></i>
                             </div>
                         </th>
+                        <th class="fw-bold text-center">Available</th>
                         <th class="fw-bold text-center">Action</th>
                     </tr>
                 </thead>
@@ -110,6 +111,14 @@
         </div>
     </div>
 </div>
+
+@* order history modal *@
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="courseHistory" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" id="courseHistoryData">
+
+    </div>
+</div>
+
 
 @* scripts *@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -205,7 +214,7 @@
             type: "GET",
             data: { id: id },
             success: function (data) {
-                console.log(data,"data");
+                console.log(data, "data");
                 $("#setUpdatePartial").html(data);
             }
         });
@@ -218,7 +227,7 @@
 
     function deleteCourse(deleteCourseId) {
         console.log("hello", deleteCourseId);
-        
+
         $.ajax({
             url: "/Course/DeleteCourse",
             type: "POST",
@@ -235,6 +244,25 @@
         event.preventDefault();
         var deleteCourseId = $('#deleteCourseId').val();
         deleteCourse(deleteCourseId);
+    });
+
+    $(document).on('click', '.open-course-history', function (event) {
+
+        var button = event.target;
+        courseId = button.getAttribute("data-id");
+        console.log(courseId)
+        $.ajax({
+            url: "/Student/SetStudentModal",
+            type: "GET",
+            data: { courseId: courseId },
+            success: function (data) {
+                $('#courseHistory').modal('show');
+                $("#courseHistoryData").html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading course history:", error);
+            }
+        });
     });
 
 </script>

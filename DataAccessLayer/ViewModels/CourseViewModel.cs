@@ -22,4 +22,6 @@ public class CourseViewModel
     [Required]
     public string Department { get; set; } 
 
+    public bool isAvailable {get; set;}
+
 }

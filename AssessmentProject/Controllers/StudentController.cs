@@ -34,6 +34,14 @@ public class StudentController : Controller
         }
         TempData["ErrorMessage"] = "Registration Failed!! Please try again ";
         return RedirectToAction("Register", "Student");
-
     }
+
+    [HttpGet]
+    public IActionResult SetStudentModal(int courseId)
+    {
+        List<StudentHistoryViewModel> studentList = _studentService.GetStudentList(courseId);
+        return PartialView("_StudentHistoryPartial", studentList);
+    }
+    
+
 }

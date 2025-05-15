@@ -24,6 +24,8 @@ public class Course
 
     public bool isDeleted {get; set;} = false;
 
+    public bool isAavailable {get; set;} = true;
+
     public virtual Department Department { get; set; } = null!;
 
     public virtual ICollection<Enrollment> Enrollment { get; set; } = new List<Enrollment>();

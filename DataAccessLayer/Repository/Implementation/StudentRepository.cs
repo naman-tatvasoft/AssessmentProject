@@ -1,6 +1,7 @@
 using DataAccessLayer.Models;
 using DataAccessLayer.Repository.Interface;
 using DataAccessLayer.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repository.Implementation;
 
@@ -37,7 +38,7 @@ public class StudentRepository : IStudentRepository
                 };
                 _context.Students.Add(student);
                 await _context.SaveChangesAsync();
-                
+
                 await transaction.CommitAsync();
 
                 return student;
@@ -49,4 +50,25 @@ public class StudentRepository : IStudentRepository
             }
         }
     }
+
+
+
+    public List<StudentHistoryViewModel> GetStudentList(int courseId)
+    {
+
+        var studentData = _context.Enrollments
+            .Include(en => en.Student)
+            .ThenInclude(en => en.UserCred)
+            .Where(en => en.CourseId == courseId)
+            .Select(en => new StudentHistoryViewModel
+            {
+                Id = en.StudentId,
+                Name = en.Student.Name,
+                Email = en.Student.UserCred.Email,
+                CreditEarned = en.Student.CreditsEarned
+            }).ToList();
+
+        return studentData;
+    }
+
 }
