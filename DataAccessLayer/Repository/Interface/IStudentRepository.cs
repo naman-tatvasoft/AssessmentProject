@@ -1,0 +1,10 @@
+using DataAccessLayer.Models;
+using DataAccessLayer.ViewModels;
+
+namespace DataAccessLayer.Repository.Interface;
+
+public interface IStudentRepository
+{
+    public Task<Student> RegisterStudent(RegisterViewModel registerData);
+
+}

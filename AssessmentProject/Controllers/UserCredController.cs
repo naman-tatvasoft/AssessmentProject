@@ -28,10 +28,17 @@ public class UserCredController : Controller
             var claims = _jwtHelper.GetClaimsFromToken(token);
             if (claims != null)
             {
-                return RedirectToAction("Index", "Dashboard");
+                var role = _jwtHelper.GetClaimValue(token, "role");
+                if (role == "Admin")
+                {
+                    return RedirectToAction("AdminDashboard", "Dashboard");
+                }
+                else if (role == "User")
+                {
+                    return RedirectToAction("StudentDashboard", "Dashboard");
+                }
             }
         }
-
         return View();
     }
 
@@ -54,6 +61,7 @@ public class UserCredController : Controller
                 Response.Cookies.Append("AuthToken", verification, option);
             }
             TempData["SuccessMessage"] = "Login Successfull";
+
             return RedirectToAction("Index", "Dashboard");
         }
         TempData["ErrorMessage"] = "Invalid Credentials";
@@ -66,6 +74,8 @@ public class UserCredController : Controller
         Response.Headers["Clear-Site-Data"] = "\"cache\", \"cookies\", \"storage\"";
         return RedirectToAction("Index", "UserCred");
     }
+
+
 
 
 }

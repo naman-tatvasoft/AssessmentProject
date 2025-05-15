@@ -1,0 +1,238 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+
+<div class="d-flex justify-content-end pt-2">
+    <a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
+</div>
+
+<div class="text-center d-flex align-content-center justify-content-center bg-black p-2">
+    <button class="btn btn-light addButton" type="button" data-bs-target="#addCourse" data-bs-toggle="modal">
+        Add Course
+    </button>
+</div>
+
+<div class="container-fluid p-4">
+    <div class="search-div pb-2">
+        <input id="search-course" type="search" placeholder="Search" class="w-100 p-1" />
+    </div>
+
+    <div class="shadow-lg p-2 rounded">
+        <div class="table-responsive p-3">
+            <table class="table w-100">
+                <thead>
+                    <tr class="border-bottom border-dark">
+                        <th class="fw-bold text-start text-nowrap">
+                            <div class="d-flex">
+                                <span>#Course Id</span>
+                                <i class="bi bi-arrow-up sortable-asc" data-name="Id"></i>
+                                <i class="bi bi-arrow-down sortable-desc" data-name="Id"></i>
+                            </div>
+                        </th>
+                        <th class="fw-bold text-center">
+                            <div class="d-flex">
+                                <span>Course Name</span>
+                                <i class="bi bi-arrow-up sortable-asc" data-name="Name"></i>
+                                <i class="bi bi-arrow-down sortable-desc" data-name="Name"></i>
+                            </div>
+                        </th>
+                        <th class="fw-bold text-center">Content</th>
+                        <th class="fw-bold text-center">Credits</th>
+                        <th class="fw-bold text-start">
+                            <div class="d-flex">
+                                <span>Department</span>
+                                <i class="bi bi-arrow-up sortable-asc" data-name="Department"></i>
+                                <i class="bi bi-arrow-down sortable-desc" data-name="Department"></i>
+                            </div>
+                        </th>
+                        <th class="fw-bold text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="courseList">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-end gap-2 p-3 pt-0 bg-white align-items-center">
+            <span>Items Per page:</span>
+            <select id="select-CoursePerPage" class="px-3 py-1 border border-secondary">
+                <option value="1" selected>1</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+            </select>
+            <span id="pagination-info-course"></span>
+            <i id="left-course-arrow"
+                class="fa-solid fa-angle-left btn border border-dark bg-light ms-2 d-flex align-items-center"></i>
+            <i id="right-course-arrow" class="fa-solid fa-angle-right btn border border-dark bg-light ms-2"></i>
+        </div>
+    </div>
+</div>
+
+@* add modal *@
+<div class="modal fade" id="addCourse" tabindex="-1" data-bs-backdrop="static" aria-labelledby="addCourse"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="setAddCoursePartial">
+
+    </div>
+</div>
+
+@* update modal *@
+
+<div class="modal fade" id="updateCourse" tabindex="-1" data-bs-backdrop="static" aria-labelledby="updateCourse"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="setupdateCoursePartial">
+
+    </div>
+</div>
+
+@* delete modal *@
+<div class="modal" tabindex="-1" data-bs-backdrop="static" id="deleteCourse">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-secondary">Delete Course Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fw-bold text-secondary text-center">Are you sure you want to delete this Course ?</p>
+            </div>
+            <form method="post" id="DeleteCourseForm">
+                <input type="hidden" id="deleteCourseId" />
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary fw-bold">Yes</button>
+                    <button type="button" class="btn btn-light fw-bold text-primary border border-primary"
+                        data-bs-dismiss="modal" id="CourseDeleteCancel">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* scripts *@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var search = "";
+    var sortColumn = "Name";
+    var sortDirection = "asc";
+    var pageNumber = 1;
+    var pageSize = 1;
+
+    function loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize) {
+        $.ajax({
+            url: "/Course/GetCourseList",
+            type: "GET",
+            data: { search: search, sortColumn: sortColumn, sortDirection: sortDirection, pageNumber: pageNumber, pageSize: pageSize },
+            success: function (data) {
+                $("#courseList").html(data);
+                pageNumber = pageNumber;
+
+                let totalRecords = parseInt($('#totalRecords_course').val()) || 0;
+                let startItem = totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
+                let endItem = Math.min(pageNumber * pageSize, totalRecords);
+
+                if (totalRecords === 0) {
+                    $("#pagination-info-course").text("No Data Found");
+                } else {
+                    $("#pagination-info-course").text("Showing " + startItem + " - " + endItem + " of " + totalRecords + " items");
+                }
+
+                $("#left-course-arrow").prop("disabled", pageNumber === 1);
+                $("#right-course-arrow").prop("disabled", pageNumber * pageSize >= totalRecords);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#search-course").on("keyup", function () {
+            search = $(this).val().trim();
+            pageNumber = 1;
+            loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+        });
+
+        $(".sortable-asc").on('click', function () {
+            sortDirection = "asc";
+            sortColumn = $(this).data('name');
+            loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+        });
+
+        $(".sortable-desc").on('click', function () {
+            sortDirection = "desc";
+            sortColumn = $(this).data('name');
+            loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+        });
+
+        $("#select-CoursePerPage").on("change", function () {
+            pageSize = $(this).val();
+            pageNumber = 1;
+            loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+        });
+
+        $("#right-course-arrow").on("click", function () {
+            if (!$(this).prop("disabled")) {
+                pageNumber++;
+                loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+            }
+        });
+
+        $("#left-course-arrow").on("click", function () {
+            if (!$(this).prop("disabled")) {
+                pageNumber--;
+                loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+            }
+        });
+
+        loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+    });
+
+    $(document).on('click', '.addButton', function (event) {
+        $.ajax({
+            url: "/Course/SetAddModal",
+            type: "GET",
+            success: function (data) {
+                $("#setAddCoursePartial").html(data);
+            }
+        });
+    });
+
+    $(document).on('click', '.updateButton', function (event) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: "/Course/SetUpdateModal",
+            type: "GET",
+            data: { id: id },
+            success: function (data) {
+                $("#setUpdateCoursePartial").html(data);
+            }
+        });
+    });
+
+    function deleteIdFetch(deleteCourseId) {
+        console.log(deleteCourseId, "dd");
+        $('#deleteCourseId').val(deleteCourseId);
+    }
+
+    function deleteCourse(deleteCourseId) {
+        console.log("hello", deleteCourseId);
+        
+        $.ajax({
+            url: "/Course/DeleteCourse",
+            type: "POST",
+            data: { id: deleteCourseId },
+            success: function (data) {
+                loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+                $('#CourseDeleteCancel').click();
+            }
+        });
+
+    }
+
+    $('#DeleteCourseForm').on('submit', function (event) {
+        event.preventDefault();
+        var deleteCourseId = $('#deleteCourseId').val();
+        deleteCourse(deleteCourseId);
+    });
+
+</script>

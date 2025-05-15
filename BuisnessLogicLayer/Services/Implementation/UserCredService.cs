@@ -9,16 +9,18 @@ public class UserCredService : IUserCredService
 {
     private readonly IUserCredRepository _userCredRepository;
     private readonly JWTHelper _jwtHelper;
-    public UserCredService(IUserCredRepository userCredRepository, JWTHelper jwtHelper)
+    private readonly PasswordHashHelper _hashPassword;
+    public UserCredService(IUserCredRepository userCredRepository, JWTHelper jwtHelper, PasswordHashHelper hashPassword)
     {
         this._userCredRepository = userCredRepository;
         this._jwtHelper = jwtHelper;
+        this._hashPassword = hashPassword;
     }
 
     public string VerifyUser(UserCredViewModel userCred)
     {
         var data = _userCredRepository.GetUserData(userCred.Email);
-        if (data != null && data.Password == userCred.Password)
+        if (data != null && data.Password == _hashPassword.EncryptPassword(userCred.Password))
         {
             var role_obj = _userCredRepository.GetRoleName(data);
             var token = _jwtHelper.GenerateToken(userCred.Email, role_obj);

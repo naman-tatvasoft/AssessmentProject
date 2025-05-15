@@ -23,7 +23,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserCredRepository, UserCredRepository>();
 builder.Services.AddScoped<IUserCredService, UserCredService>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<JWTHelper>();
+builder.Services.AddScoped<PasswordHashHelper>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
