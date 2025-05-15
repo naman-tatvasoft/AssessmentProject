@@ -52,54 +52,72 @@ public class StudentRepository : IStudentRepository
     }
 
 
-
     public List<StudentHistoryViewModel> GetStudentList(int courseId)
     {
+        try
+        {
+            var studentData = _context.Enrollments
+                .Include(en => en.Student)
+                .ThenInclude(en => en.UserCred)
+                .Where(en => en.CourseId == courseId && !en.isWithdrawn)
+                .Select(en => new StudentHistoryViewModel
+                {
+                    Id = en.StudentId,
+                    Name = en.Student.Name,
+                    Email = en.Student.UserCred.Email,
+                    CreditEarned = en.Student.CreditsEarned
+                }).ToList();
 
-        var studentData = _context.Enrollments
-            .Include(en => en.Student)
-            .ThenInclude(en => en.UserCred)
-            .Where(en => en.CourseId == courseId && !en.isWithdrawn)
-            .Select(en => new StudentHistoryViewModel
-            {
-                Id = en.StudentId,
-                Name = en.Student.Name,
-                Email = en.Student.UserCred.Email,
-                CreditEarned = en.Student.CreditsEarned
-            }).ToList();
-
-        return studentData;
+            return studentData;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public List<CourseViewModel> GetMyCourses(int studentId)
     {
+        try
+        {
+            var studentData = _context.Enrollments
+                .Where(en => en.StudentId == studentId && !en.isWithdrawn && !en.isCompleted)
+                .Select(en => new CourseViewModel
+                {
+                    Id = en.CourseId,
+                    CourseName = en.Course.Name,
+                    Content = en.Course.Content,
+                    Credits = en.Course.Credits
+                }).ToList();
 
-        var studentData = _context.Enrollments
-            .Where(en => en.StudentId == studentId && !en.isWithdrawn && !en.isCompleted)
-            .Select(en => new CourseViewModel
-            {
-                Id = en.CourseId,
-                CourseName = en.Course.Name,
-                Content = en.Course.Content,
-                Credits = en.Course.Credits
-            }).ToList();
-
-        return studentData;
+            return studentData;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public ProfileViewModel GetProfile(int studentId)
     {
-        var studentData = _context.Students
-        .Include(s => s.UserCred)
-        .Where(s => s.Id == studentId)
-        .Select(s => new ProfileViewModel
+        try
+        {
+            var studentData = _context.Students
+            .Include(s => s.UserCred)
+            .Where(s => s.Id == studentId)
+            .Select(s => new ProfileViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
                 Email = s.UserCred.Email,
                 CreditEarned = s.CreditsEarned
-                
+
             }).FirstOrDefault();
-        return studentData;
+            return studentData;
+        }
+        catch
+        {
+            throw;
+        }
     }
 }

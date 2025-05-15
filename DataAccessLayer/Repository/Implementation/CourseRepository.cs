@@ -33,158 +33,243 @@ public class CourseRepository : ICourseRepository
 
     public async Task<bool> AddCourse(CourseViewModel courseVM)
     {
-        var course = new Course
-        {
-            Name = courseVM.CourseName,
-            Content = courseVM.Content,
-            Credits = courseVM.Credits,
-            DepartmentId = courseVM.DepartmentId,
-            isAavailable = courseVM.isAvailable
-        };
-        _context.Add(course);
 
-        return await _context.SaveChangesAsync() > 0;
+        try
+        {
+            var course = new Course
+            {
+                Name = courseVM.CourseName,
+                Content = courseVM.Content,
+                Credits = courseVM.Credits,
+                DepartmentId = courseVM.DepartmentId,
+                isAavailable = courseVM.isAvailable
+            };
+            _context.Add(course);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch
+        {
+            throw;
+        }
+
     }
 
     public CourseViewModel SetUpdateModal(int id)
     {
-        var course = _context.Courses.FirstOrDefault(c => c.Id == id);
-        if (course != null)
+        try
         {
-            var courseVM = new CourseViewModel
+            var course = _context.Courses.FirstOrDefault(c => c.Id == id);
+            if (course != null)
             {
-                Id = course.Id,
-                CourseName = course.Name,
-                Content = course.Content,
-                Credits = course.Credits,
-                DepartmentId = course.DepartmentId,
-                isAvailable = course.isAavailable
-            };
-            return courseVM;
+                var courseVM = new CourseViewModel
+                {
+                    Id = course.Id,
+                    CourseName = course.Name,
+                    Content = course.Content,
+                    Credits = course.Credits,
+                    DepartmentId = course.DepartmentId,
+                    isAvailable = course.isAavailable
+                };
+                return courseVM;
+            }
+            return null;
         }
-        return null;
+        catch
+        {
+            throw;
+        }
     }
 
 
     public async Task<bool> UpdateCourse(CourseViewModel courseVM)
     {
-        var course = _context.Courses.FirstOrDefault(c => c.Id == courseVM.Id);
-
-        if (course != null)
+        try
         {
-            course.Name = courseVM.CourseName;
-            course.Content = courseVM.Content;
-            course.Credits = courseVM.Credits;
-            course.DepartmentId = courseVM.DepartmentId;
-            course.isAavailable = courseVM.isAvailable;
-            _context.Update(course);
-        }
+            var course = _context.Courses.FirstOrDefault(c => c.Id == courseVM.Id);
 
-        return await _context.SaveChangesAsync() > 0;
+            if (course != null)
+            {
+                course.Name = courseVM.CourseName;
+                course.Content = courseVM.Content;
+                course.Credits = courseVM.Credits;
+                course.DepartmentId = courseVM.DepartmentId;
+                course.isAavailable = courseVM.isAvailable;
+                _context.Update(course);
+            }
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public async Task<bool> DeleteCourse(int id)
     {
-        var course = _context.Courses.FirstOrDefault(pr => pr.Id == id);
-        if (course != null)
+        try
         {
-            course.isDeleted = true;
-            _context.Update(course);
+            var course = _context.Courses.FirstOrDefault(pr => pr.Id == id);
+            if (course != null)
+            {
+                course.isDeleted = true;
+                _context.Update(course);
+            }
+            return await _context.SaveChangesAsync() > 0;
         }
-        return await _context.SaveChangesAsync() > 0;
+        catch
+        {
+            throw;
+        }
     }
 
     public IQueryable<CourseViewModel> GetCourseListStudent(int studentId)
     {
-        var query = _context
-        .Courses
-        .Include(c => c.Department)
-        .ThenInclude(c => c.Student)
-        .Where(c => !c.isDeleted && c.isAavailable && c.Department.Student.FirstOrDefault().Id == studentId)
-            .Select(x => new CourseViewModel
-            {
-                Id = x.Id,
-                CourseName = x.Name,
-                Content = x.Content,
-                Credits = x.Credits,
-                Department = _context.Departments.FirstOrDefault(c => c.Id == x.DepartmentId).Name,
-                isAvailable = x.isAavailable
-            }).OrderBy(u => u.CourseName).AsQueryable();
-        return query;
+        try
+        {
+            var query = _context
+            .Courses
+            .Include(c => c.Department)
+            .ThenInclude(c => c.Student)
+            .Where(c => !c.isDeleted && c.isAavailable && c.Department.Student.FirstOrDefault().Id == studentId)
+                .Select(x => new CourseViewModel
+                {
+                    Id = x.Id,
+                    CourseName = x.Name,
+                    Content = x.Content,
+                    Credits = x.Credits,
+                    Department = _context.Departments.FirstOrDefault(c => c.Id == x.DepartmentId).Name,
+                    isAvailable = x.isAavailable
+                }).OrderBy(u => u.CourseName).AsQueryable();
+            return query;
+        }
+        catch
+        {
+            throw;
+        }
     }
     public bool IsAlreadyEnrolled(int courseId, int studentId)
     {
-        var isEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn).Any();
-        if (isEnrolled)
+        try
         {
-            return true;
+            var isEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn).Any();
+            if (isEnrolled)
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch
+        {
+            throw;
+        }
     }
 
     public bool isAnyEnrolled(int courseId)
     {
-       var isAnyEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && !en.isCompleted && !en.isWithdrawn).Any();
-        if (isAnyEnrolled)
+        try
         {
-            return true;
+            var isAnyEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && !en.isCompleted && !en.isWithdrawn).Any();
+            if (isAnyEnrolled)
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch
+        {
+            throw;
+        }
     }
 
     public bool IsAlreadyCompleted(int courseId, int studentId)
     {
-        var isCompleted = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId && en.isCompleted).Any();
-        if (isCompleted)
+        try
         {
-            return true;
+            var isCompleted = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId && en.isCompleted).Any();
+            if (isCompleted)
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch
+        {
+            throw;
+        }
     }
 
 
 
     public async Task<bool> EnrollCourse(int courseId, int studentId)
     {
-        var enroll = new Enrollment
+        try
         {
-            CourseId = courseId,
-            StudentId = studentId,
-            isCompleted = false,
-            isWithdrawn = false
-        };
-        _context.Add(enroll);
-        return await _context.SaveChangesAsync() > 0;
+            var enroll = new Enrollment
+            {
+                CourseId = courseId,
+                StudentId = studentId,
+                isCompleted = false,
+                isWithdrawn = false
+            };
+            _context.Add(enroll);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public async Task<bool> WithdrawCourse(int courseId, int studentId)
     {
-        var enroll = _context.Enrollments.FirstOrDefault(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn);
-        if (enroll != null)
+        try
         {
-            enroll.isWithdrawn = true;
-            _context.Update(enroll);
+            var enroll = _context.Enrollments.FirstOrDefault(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn);
+            if (enroll != null)
+            {
+                enroll.isWithdrawn = true;
+                _context.Update(enroll);
+            }
+            return await _context.SaveChangesAsync() > 0;
         }
-        return await _context.SaveChangesAsync() > 0;
+        catch
+        {
+            throw;
+        }
     }
 
     public async Task<bool> CompleteCourse(int courseId, int studentId)
     {
-        var enroll = _context.Enrollments.FirstOrDefault(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn);
-        if (enroll != null)
+        using (var transaction = await _context.Database.BeginTransactionAsync())
         {
-            enroll.isCompleted = true;
-            _context.Update(enroll);
+            try
+            {
+                var enroll = _context.Enrollments.FirstOrDefault(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn);
+                if (enroll != null)
+                {
+                    enroll.isCompleted = true;
+                    _context.Update(enroll);
+                }
+
+                var student = _context.Students.FirstOrDefault(s => s.Id == studentId);
+                if (student != null)
+                {
+                    student.CreditsEarned += _context.Courses.FirstOrDefault(c => c.Id == courseId).Credits;
+                    _context.Update(student);
+
+                }
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-
-        var student = _context.Students.FirstOrDefault(s => s.Id == studentId);
-        if (student != null)
-        {
-            student.CreditsEarned += _context.Courses.FirstOrDefault(c => c.Id == courseId).Credits;
-            _context.Update(student);
-
-        }
-
-        return await _context.SaveChangesAsync() > 0;
     }
 }

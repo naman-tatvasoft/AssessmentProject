@@ -14,7 +14,14 @@ public class DepartmentRepository : IDepartmentRepository
 
     public IEnumerable<Department> GetDepartment()
     {
-        return _context.Departments;
+        try
+        {
+            return _context.Departments;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
 }

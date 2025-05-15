@@ -41,7 +41,15 @@ public class UserCredRepository : IUserCredRepository
 
     public int GetUserId(string email)
     {
-        return _context.Students.Include(s => s.UserCred).FirstOrDefault(s => s.UserCred.Email == email).Id;
+        try
+        {
+            return _context.Students.Include(s => s.UserCred).FirstOrDefault(s => s.UserCred.Email == email).Id;
+        }
+        catch
+        {
+            throw;
+        }
+
     }
 
 }
