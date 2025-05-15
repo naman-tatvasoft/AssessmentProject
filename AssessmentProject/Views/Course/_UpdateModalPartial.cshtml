@@ -1,0 +1,75 @@
+@model DataAccessLayer.ViewModels.CourseViewModel
+<div class="modal-content">
+    <div class="modal-header btn-warning">
+        <h5 class="modal-title fs-5 fw-bold text-secondary">Update Course</h5>
+    </div>
+    <form id="UpdateCourseForm">
+        <div class="modal-body">
+
+            <input type="hidden" asp-for="@Model.Id">
+            <div class="row">
+                <div class="form-floating col-6 p-1">
+                    <input type="text" class="form-control" asp-for="@Model.CourseName" id="floatingInput"
+                        placeholder="Name*">
+                    <label for="floatingInput" class="text-secondary">Name*</label>
+                    <span asp-validation-for="@Model.CourseName" class="text-danger validate"></span>
+                </div>
+
+                <div class="form-floating col-6 p-1">
+                    <input type="text" class="form-control" asp-for="@Model.Content" id="Content" placeholder="Content*">
+                    <label for="Content" class="text-secondary">Content*</label>
+                    <span asp-validation-for="@Model.Content" class="text-danger validate"></span>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="form-floating col-6 p-1">
+                    <input type="text" class="form-control" asp-for="@Model.Credits" id="floatingInput"
+                        placeholder="Credits*" required>
+                    <label for="floatingInput">Credits*</label>
+                    <span asp-validation-for="@Model.Credits" class="text-danger validate"></span>
+                </div>
+
+                <div class="form-floating col-6 p-1">
+                    <select class="form-select" asp-for="@Model.DepartmentId" id="selectDomainDropDown" asp-items="ViewBag.DepartmentFields">
+                    </select>
+                    <label for="selectDepartmentDropDown">Department</label>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <div class=" w-100 d-flex justify-content-between">
+                <button type="button" class="btn btn-white text-primary border border-primary" style="width:48%" data-bs-dismiss="modal"
+                    id="UpdateCourseCancell">Cancel</button>
+                <button type="submit" class="btn btn-primary" style="width:48%">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#UpdateCourseForm').on('submit', function(e){
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: "/Course/UpdateCourse",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (data) {
+                $('#UpdateCourseCancell').click();
+                loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
+            }
+        });
+    });
+</script>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

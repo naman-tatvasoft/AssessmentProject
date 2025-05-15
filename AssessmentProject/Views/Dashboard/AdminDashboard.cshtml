@@ -83,7 +83,7 @@
 
 <div class="modal fade" id="updateCourse" tabindex="-1" data-bs-backdrop="static" aria-labelledby="updateCourse"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" id="setupdateCoursePartial">
+    <div class="modal-dialog modal-dialog-centered" id="setUpdatePartial">
 
     </div>
 </div>
@@ -198,13 +198,15 @@
     });
 
     $(document).on('click', '.updateButton', function (event) {
+        console.log("hello");
         var id = $(this).data('id');
         $.ajax({
             url: "/Course/SetUpdateModal",
             type: "GET",
             data: { id: id },
             success: function (data) {
-                $("#setUpdateCoursePartial").html(data);
+                console.log(data,"data");
+                $("#setUpdatePartial").html(data);
             }
         });
     });

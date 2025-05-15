@@ -1,0 +1,30 @@
+@using DataAccessLayer.ViewModels
+@model PaginationViewModel<CourseViewModel>
+
+@if (Model.Items.Count == 0)
+{
+    <tr>
+        <td colspan="6" class="text-center text-danger fw-bold">No Data Found</td>
+    </tr>
+}
+else
+{
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+
+            <td>@item.Id</td>
+            <td>@item.CourseName</td>
+            <td>@item.Content</td>
+            <td>@item.Credits</td>
+            <td>@item.Department</td>
+            <td>
+                <i class="fa-solid fa-pen w-25 updateButton" data-bs-toggle="modal" data-bs-target="#updateCourse" data-id="@item.Id"></i>
+                <i class="fa-solid fa-trash-can deleteButton" data-bs-toggle="modal"  data-bs-target="#deleteCourse" data-id="@item.Id"
+                onclick="deleteIdFetch(@item.Id)"></i>
+            </td>
+
+        </tr>
+    }
+}
+<input type="hidden" id="totalRecords_course" value="@Model.TotalCount"/>
