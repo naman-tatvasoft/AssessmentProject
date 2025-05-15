@@ -2,6 +2,7 @@
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AssessmentProjectDbContext))]
-    partial class AssessmentProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250515045018_InitialCreate4")]
+    partial class InitialCreate4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,35 +70,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Enrollment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("isCompleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("isWithdrawn")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Enrollments");
-                });
-
             modelBuilder.Entity("DataAccessLayer.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -111,36 +85,6 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CreditsEarned")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserCredId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("UserCredId");
-
-                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.UserCred", b =>
@@ -180,44 +124,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Enrollment", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Course", "Course")
-                        .WithMany("Enrollment")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Models.Student", "Student")
-                        .WithMany("Enrollment")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Student", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Department", "Department")
-                        .WithMany("Student")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Models.UserCred", "UserCred")
-                        .WithMany("Student")
-                        .HasForeignKey("UserCredId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("UserCred");
-                });
-
             modelBuilder.Entity("DataAccessLayer.Models.UserCred", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Role", "Role")
@@ -229,31 +135,14 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Course", b =>
-                {
-                    b.Navigation("Enrollment");
-                });
-
             modelBuilder.Entity("DataAccessLayer.Models.Department", b =>
                 {
                     b.Navigation("Courses");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Role", b =>
                 {
                     b.Navigation("UserCred");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Student", b =>
-                {
-                    b.Navigation("Enrollment");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.UserCred", b =>
-                {
-                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }
