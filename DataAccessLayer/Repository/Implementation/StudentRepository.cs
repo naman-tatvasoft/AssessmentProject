@@ -75,7 +75,7 @@ public class StudentRepository : IStudentRepository
     {
 
         var studentData = _context.Enrollments
-            .Where(en => en.StudentId == studentId && !en.isWithdrawn)
+            .Where(en => en.StudentId == studentId && !en.isWithdrawn && !en.isCompleted)
             .Select(en => new CourseViewModel
             {
                 Id = en.CourseId,

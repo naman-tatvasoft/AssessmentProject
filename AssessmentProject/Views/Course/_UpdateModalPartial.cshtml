@@ -72,6 +72,11 @@
             processData: false,
             data: formData,
             success: function (data) {
+                if (data.success != false) {
+                    callSuccessToaster(data.message);
+                } else {
+                    callErrorToaster(data.message);
+                }
                 $('#UpdateCourseCancell').click();
                 loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
             }

@@ -3,16 +3,18 @@
     ViewData["Title"] = "Student Dashboard";
 }
 
-<div class="d-flex justify-content-between pt-2">
+<div class="d-flex justify-content-end pt-2 gap-2">
      <a class="btn btn-primary" asp-controller="Student" asp-action="MyCourse">My Course</a>
+    <a class="btn btn-primary" asp-controller="Student" asp-action="Profile">Profile</a>
     <a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
 </div>
 
 
 
 <div class="container-fluid p-4">
-    <div class="search-div pb-2">
-        <input id="search-course-student" type="search" placeholder="Search" class="w-100 p-1" />
+    <div class="search-div pb-2 d-flex justify-content-between">
+        <h1>Course List</h1>
+        <input id="search-course-student" type="search" placeholder="Search" class="w-20 p-1" />
     </div>
 
     <div class="shadow-lg p-2 rounded">
@@ -107,7 +109,6 @@
             type: "GET",
             data: { search: search, sortColumn: sortColumn, sortDirection: sortDirection, pageNumber: pageNumber, pageSize: pageSize },
             success: function (data) {
-                console.log(data);
                 $("#courseList-student").html(data);
                 pageNumber = pageNumber;
 
@@ -170,19 +171,16 @@
     });
 
     function enrollIdFetch(enrollCourseId) {
-        console.log(enrollCourseId, "dd");
         $('#enrollCourseId').val(enrollCourseId);
     }
 
     function EnrollCourse(enrollCourseId) {
-        console.log("hello", enrollCourseId);
 
         $.ajax({
             url: "/Course/EnrollCourse",
             type: "POST",
             data: { courseId: enrollCourseId },
             success: function (data) {
-                console.log(data,"data");
                 if(data.success != false){
                     loadCourseStudent(search, sortColumn, sortDirection, pageNumber, pageSize);
                     $('#CourseEnrollCancel').click();

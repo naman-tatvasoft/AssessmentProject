@@ -3,20 +3,18 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-
-<div class="d-flex justify-content-end pt-2">
-    <a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
-</div>
-
-<div class="text-center d-flex align-content-center justify-content-center bg-black p-2">
-    <button class="btn btn-light addButton" type="button" data-bs-target="#addCourse" data-bs-toggle="modal">
+<div class="text-center d-flex align-content-center justify-content-end p-2  gap-2">
+    <button class="btn btn-primary addButton " type="button" data-bs-target="#addCourse" data-bs-toggle="modal">
         Add Course
     </button>
+    <a class="btn btn-danger" asp-controller="UserCred" asp-action="Logout">logout</a>
+
 </div>
 
 <div class="container-fluid p-4">
-    <div class="search-div pb-2">
-        <input id="search-course" type="search" placeholder="Search" class="w-100 p-1" />
+    <div class="search-div pb-2 d-flex justify-content-between">
+        <h1>All Course List</h1>
+        <input id="search-course" type="search" placeholder="Search" class="w-20 p-1" />
     </div>
 
     <div class="shadow-lg p-2 rounded">
@@ -207,26 +205,22 @@
     });
 
     $(document).on('click', '.updateButton', function (event) {
-        console.log("hello");
         var id = $(this).data('id');
         $.ajax({
             url: "/Course/SetUpdateModal",
             type: "GET",
             data: { id: id },
             success: function (data) {
-                console.log(data, "data");
                 $("#setUpdatePartial").html(data);
             }
         });
     });
 
     function deleteIdFetch(deleteCourseId) {
-        console.log(deleteCourseId, "dd");
         $('#deleteCourseId').val(deleteCourseId);
     }
 
     function deleteCourse(deleteCourseId) {
-        console.log("hello", deleteCourseId);
 
         $.ajax({
             url: "/Course/DeleteCourse",
@@ -234,12 +228,19 @@
             data: { id: deleteCourseId },
             success: function (data) {
                 loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
-                $('#CourseDeleteCancel').click();
+                if (data.success != false) {
+                    $('#CourseDeleteCancel').click();
+                    callSuccessToaster(data.message);
+                } else {
+                    callErrorToaster(data.message);
+                    $('#CourseDeleteCancel').click();
+                }
+
             }
         });
 
     }
-
+   
     $('#DeleteCourseForm').on('submit', function (event) {
         event.preventDefault();
         var deleteCourseId = $('#deleteCourseId').val();
@@ -250,7 +251,6 @@
 
         var button = event.target;
         courseId = button.getAttribute("data-id");
-        console.log(courseId)
         $.ajax({
             url: "/Student/SetStudentModal",
             type: "GET",

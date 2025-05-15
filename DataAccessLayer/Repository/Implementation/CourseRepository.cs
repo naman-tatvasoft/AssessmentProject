@@ -114,13 +114,34 @@ public class CourseRepository : ICourseRepository
     }
     public bool IsAlreadyEnrolled(int courseId, int studentId)
     {
-        var isEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId).Any();
+        var isEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn).Any();
         if (isEnrolled)
         {
             return true;
         }
         return false;
     }
+
+    public bool isAnyEnrolled(int courseId)
+    {
+       var isAnyEnrolled = _context.Enrollments.Where(en => en.CourseId == courseId && !en.isCompleted && !en.isWithdrawn).Any();
+        if (isAnyEnrolled)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsAlreadyCompleted(int courseId, int studentId)
+    {
+        var isCompleted = _context.Enrollments.Where(en => en.CourseId == courseId && en.StudentId == studentId && en.isCompleted).Any();
+        if (isCompleted)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 
     public async Task<bool> EnrollCourse(int courseId, int studentId)
@@ -133,6 +154,37 @@ public class CourseRepository : ICourseRepository
             isWithdrawn = false
         };
         _context.Add(enroll);
+        return await _context.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> WithdrawCourse(int courseId, int studentId)
+    {
+        var enroll = _context.Enrollments.FirstOrDefault(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn);
+        if (enroll != null)
+        {
+            enroll.isWithdrawn = true;
+            _context.Update(enroll);
+        }
+        return await _context.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> CompleteCourse(int courseId, int studentId)
+    {
+        var enroll = _context.Enrollments.FirstOrDefault(en => en.CourseId == courseId && en.StudentId == studentId && !en.isCompleted && !en.isWithdrawn);
+        if (enroll != null)
+        {
+            enroll.isCompleted = true;
+            _context.Update(enroll);
+        }
+
+        var student = _context.Students.FirstOrDefault(s => s.Id == studentId);
+        if (student != null)
+        {
+            student.CreditsEarned += _context.Courses.FirstOrDefault(c => c.Id == courseId).Credits;
+            _context.Update(student);
+
+        }
+
         return await _context.SaveChangesAsync() > 0;
     }
 }

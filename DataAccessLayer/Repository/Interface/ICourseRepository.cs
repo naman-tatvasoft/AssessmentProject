@@ -11,6 +11,12 @@ public interface ICourseRepository
     public Task<bool> DeleteCourse(int id);
     public IQueryable<CourseViewModel> GetCourseListStudent(int studentId);
     public bool IsAlreadyEnrolled(int courseId, int studentId);
+    public bool isAnyEnrolled(int courseId);
+
+    public bool IsAlreadyCompleted(int courseId, int studentId);
     public Task<bool> EnrollCourse(int courseId, int studentId);
+
+    public Task<bool> WithdrawCourse(int courseId, int studentId);
+    public Task<bool> CompleteCourse(int courseId, int studentId);
 
 }

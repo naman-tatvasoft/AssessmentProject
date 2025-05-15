@@ -42,8 +42,7 @@
 
             <div class="row">
                 <div class="form-check form-switch d-flex justify-content-center align-items-center gap-2">
-                    <input class="form-check-input fs-3" type="checkbox" role="switch"
-                        asp-for="@Model.isAvailable" />
+                    <input class="form-check-input fs-3" type="checkbox" role="switch" asp-for="@Model.isAvailable" />
                     <span>isAvailable</span>
                 </div>
             </div>
@@ -72,6 +71,11 @@
             processData: false,
             data: formData,
             success: function (data) {
+                if (data.success != false) {
+                    callSuccessToaster(data.message);
+                } else {
+                    callErrorToaster(data.message);
+                }
                 $('#AddCourseCancell').click();
                 loadCourse(search, sortColumn, sortDirection, pageNumber, pageSize);
             }

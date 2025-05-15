@@ -112,9 +112,27 @@ public class CourseService : ICourseService
     {
         return _courseRepository.IsAlreadyEnrolled(courseId, studentId);
     }
+    public bool isAnyEnrolled(int courseId)
+    {
+        return _courseRepository.isAnyEnrolled(courseId);
+    }
+    public bool IsAlreadyCompleted(int courseId, int studentId)
+    {
+        return _courseRepository.IsAlreadyCompleted(courseId, studentId);
+    }
 
     public async Task<bool> EnrollCourse(int courseId, int studentId)
     {
         return await _courseRepository.EnrollCourse(courseId, studentId);
+    }
+
+    public async Task<bool> WithdrawCourse(int courseId, int studentId)
+    {
+        return await _courseRepository.WithdrawCourse(courseId, studentId);
+    }
+
+    public async Task<bool> CompleteCourse(int courseId, int studentId)
+    {
+        return await _courseRepository.CompleteCourse(courseId, studentId);
     }
 }

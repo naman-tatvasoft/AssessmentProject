@@ -1,6 +1,10 @@
 @using DataAccessLayer.ViewModels
 @model List<CourseViewModel>
 
+<div class="d-flex justify-content-end pt-2">
+     <a class="btn btn-primary" asp-controller="Dashboard" asp-action="StudentDashboard">Back</a>
+</div>
+
 <div class="table-responsive p-3">
     <table class="table w-100">
         <thead>
@@ -50,3 +54,103 @@
         </tbody>
     </table>
 </div>
+
+
+
+@* complete modal *@
+<div class="modal" tabindex="-1" data-bs-backdrop="static" id="completeCourse">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-secondary">Complete Course Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fw-bold text-secondary text-center">Are you sure you want to Complete this Course ?</p>
+            </div>
+            <form method="post" id="CompleteCourseForm">
+                <input type="hidden" id="completeCourseId"/>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary fw-bold">Yes</button>
+                    <button type="button" class="btn btn-light fw-bold text-primary border border-primary"
+                        data-bs-dismiss="modal" id="CourseCompleteCancel">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* withdraw modal *@
+<div class="modal" tabindex="-1" data-bs-backdrop="static" id="withdrawCourse">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-secondary">withdraw Course Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fw-bold text-secondary text-center">Are you sure you want to withdraw this Course ?</p>
+            </div>
+            <form method="post" id="WithdrawCourseForm">
+                <input type="hidden" id="withdrawCourseId"/>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary fw-bold">Yes</button>
+                    <button type="button" class="btn btn-light fw-bold text-primary border border-primary"
+                        data-bs-dismiss="modal" id="CourseWithdrawCancel">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    function CompleteCourse(completeCourseId) {
+
+        $.ajax({
+            url: "/Course/CompleteCourse",
+            type: "POST",
+            data: { courseId: completeCourseId },
+            success: function (data) {
+               location.reload()
+            }
+        });
+
+    }
+      function completeIdFetch(completeCourseId) {
+        $('#completeCourseId').val(completeCourseId);
+    }
+
+    
+    $('#CompleteCourseForm').on('submit', function (event) {
+        event.preventDefault();
+        var completeCourseId = $('#completeCourseId').val();
+        CompleteCourse(completeCourseId);
+    });
+
+
+    function WithdrawCourse(withdrawCourseId) {
+
+        $.ajax({
+            url: "/Course/WithdrawCourse",
+            type: "POST",
+            data: { courseId: withdrawCourseId },
+            success: function (data) {
+              location.reload();
+            }
+        });
+
+    }
+      function withdrawIdFetch(withdrawCourseId) {
+        $('#withdrawCourseId').val(withdrawCourseId);
+    }
+
+    
+    $('#WithdrawCourseForm').on('submit', function (event) {
+        event.preventDefault();
+        var withdrawCourseId = $('#withdrawCourseId').val();
+        WithdrawCourse(withdrawCourseId);
+    });
+</script>
