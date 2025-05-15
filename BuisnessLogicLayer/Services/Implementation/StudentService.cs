@@ -40,6 +40,10 @@ public class StudentService : IStudentService
         var studentCourseData = _studentRepository.GetMyCourses(studentId);
         return studentCourseData;
     }
+    public ProfileViewModel GetProfile(int studentId){
+         var studentData = _studentRepository.GetProfile(studentId);
+        return studentData;
+    }
     
 
 }

@@ -1,0 +1,12 @@
+@model DataAccessLayer.ViewModels.ProfileViewModel;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Profile";
+}
+
+
+<h1>Profile</h1>
+
+<div>Name: @Model.Name</div>
+<div>Email: @Model.Email</div>
+<div>Credits: @Model.CreditEarned</div>

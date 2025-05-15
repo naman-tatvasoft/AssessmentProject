@@ -71,7 +71,7 @@ public class StudentRepository : IStudentRepository
         return studentData;
     }
 
-     public List<CourseViewModel> GetMyCourses(int studentId)
+    public List<CourseViewModel> GetMyCourses(int studentId)
     {
 
         var studentData = _context.Enrollments
@@ -87,4 +87,19 @@ public class StudentRepository : IStudentRepository
         return studentData;
     }
 
+    public ProfileViewModel GetProfile(int studentId)
+    {
+        var studentData = _context.Students
+        .Include(s => s.UserCred)
+        .Where(s => s.Id == studentId)
+        .Select(s => new ProfileViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.UserCred.Email,
+                CreditEarned = s.CreditsEarned
+                
+            }).FirstOrDefault();
+        return studentData;
+    }
 }
